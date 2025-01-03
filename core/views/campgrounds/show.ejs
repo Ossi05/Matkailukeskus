@@ -101,8 +101,9 @@
                             </span>
                             <span id="createdAt">
                                 Julkaistu: <time datetime="<%= campground.createdAt.toISOString() %>"
-                                    title="<%= campground.createdAt.toLocaleString() %>">
-                                    <%= campground.createdAt.toLocaleDateString() %>
+                                    title="<%= campground.createdAt.toLocaleDateString('fi-FI', { timeZone: 'Europe/Helsinki' }) %>">
+                                    <%= campground.createdAt.toLocaleDateString('fi-FI', { timeZone: 'Europe/Helsinki'
+                                        }) %>
                                 </time>
                             </span>
                         </div>
@@ -225,7 +226,7 @@
                 <% if (user) { %>
                     <script src="/scripts/starFieldset.js"></script>
                     <% } %>
-                        <% campground.author = undefined; // Remove the author so clients can't see it %>
+                        <% campground.author=undefined; // Remove the author so clients can't see it %>
                             <script>
                                 const campgrounds = [<%- JSON.stringify(campground) %>];
                             </script>
