@@ -4,7 +4,8 @@ const scriptSrcUrls = [
     "https://cdnjs.cloudflare.com",
     "https://cdn.jsdelivr.net",
     "https://api.mapbox.com",
-    "https://unpkg.com"
+    "https://unpkg.com",
+    "https://static.cloudflareinsights.com" // Used for Cloudflare Web Analytics. Isn't necessary and can be removed.
 ];
 const styleSrcUrls = [
     "https://kit-free.fontawesome.com",
