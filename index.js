@@ -60,7 +60,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: {
         httpOnly: true,
-        secure: false, // Set `secure: true` in production with HTTPS
+        secure: true, // Set `secure: true` in production with HTTPS
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // Cookie expires in 1 week
         maxAge: Date.now() + 1000 * 60 * 60 * 24 * 7, // Cookie's max age is 1 week
     }
