@@ -1,0 +1,48 @@
+#campground-form-image-container input[type="checkbox"] {
+    display: none;
+}
+
+#campground-form-image-container input[type="checkbox"]:checked+label img {
+    background-color: red;
+}
+
+#campground-form-image-container .img-thumbnail {
+    transition: ease-in 0.2s;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+#campground-form-image-container .img-thumbnail:hover {
+    opacity: .8;
+    cursor: pointer;
+}
+
+.dragging {
+    pointer-events: none;
+}
+
+.trashcan-parent {
+    position: relative;
+}
+
+.trashcan-parent .trashcan {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+}
+
+.trashcan-parent .trashcan .bi-trash {
+    color: white;
+    width: 3rem;
+    height: 3rem;
+}
+
+#campground-form-image-container input[type="checkbox"]:checked+label .trashcan {
+    display: flex;
+}

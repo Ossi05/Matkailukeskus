@@ -1,0 +1,52 @@
+<% TITLE=`Kirjaudu sisään | ${WEBSITE_NAME}`%>
+    <%=layout( 'layouts/boilerplate' ) %>
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-12 col-md-6 col-xl-4">
+                    <div class="card shadow">
+                        <img src="https://res.cloudinary.com/da6ijff9w/image/upload/c_crop,w_1141,h_856/v1735815416/photo-1571863533956-01c88e79957e_ybqkqb.jpg"
+                            alt="" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">Kirjaudu Sisään</h5>
+                            <form action="<%= postRoute %>" method="post" novalidate
+                                class="validated-form realtime-form-validation">
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Käyttäjänimi / Sähköposti</label>
+                                    <input type="text" name="username" id="username" placeholder="Käyttäjänimi"
+                                        class="form-control" required
+                                        minlength="<%= userRequirements.minUsernameLength %>"
+                                        maxlength="<%= userRequirements.maxEmailLength %>" autofocus
+                                        autocomplete="username">
+                                    <div class="valid-feedback">
+                                        Hyvältä näyttää!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Käyttäjänimi puuttuu.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="password" class="form-label">Salasana</label>
+                                    <input type="password" name="password" id="password" placeholder="Salasana"
+                                        class="form-control" required
+                                        minlength="<%= userRequirements.minPasswordLength %>"
+                                        maxlength="<%= userRequirements.maxPasswordLength %>"
+                                        autocomplete="current-password">
+                                    <div class="valid-feedback">
+                                        Hyvältä näyttää!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Salasana puuttuu.
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <a href="<%= routes.account.root %><%= routes.account.register %>"
+                                        class="btn btn-outline-primary">Luo uusi
+                                        käyttäjä</a>
+                                    <button type="submit" class="btn btn-success">Kirjaudu Sisään</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

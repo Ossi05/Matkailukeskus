@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Etusivu | <%= WEBSITE_NAME %></title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="/styles/index.css">
+    <link rel="stylesheet" href="/styles/home.css">
+    <%- include('./partials/map')%>
+</head>
+
+<body>
+    <%- include('./partials/header')%>
+        <%- include('./partials/svg')%>
+            <div class="landing-page mb-3">
+                <% if (messages) { %>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col mt-3">
+                                <%- include('./partials/flash')%>
+                            </div>
+                        </div>
+                    </div>
+                    <% } %>
+                        <div class="container center text-white pb-5">
+                            <div class="row mb-3 text-center">
+                                <h1>Tervetuloa Matkailukeskukseen!</h1>
+                                <p class="lead"> <%= WEBSITE_NAME %> on yhä työnalla.<br>
+                                    Uusia kohteita lisätään säännöllisesti ja <br>voit kommentoida niitä tai luoda omasi.
+                                </p>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="d-flex justify-content-center">
+                                        <a href="#main" class="btn btn-outline-primary read-more-button">Lue Lisää
+                                            <span class="d-flex justify-content-center">&downarrow;</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+            </div>
+            <main id="main" class="container mb-5">
+                <div class="row mb-3">
+                    <div class="col">
+                        <h1 class="display-1"><%= WEBSITE_NAME %>!</h1>
+                    </div>
+                </div>
+                <div class="row justify-content-between">
+                    <div class="col-12 col-lg-6">
+                        <div class="row mb-5">
+                            <div class="col-12 col-md-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Elämyksiä ja rentoutusta
+                                            arkeen.
+                                        </h5>
+                                        <p class="card-text"> Tarjoamme viihtyisiä
+                                            majoitusvaihtoehtoja ympäri Suomen ympäri vuoden. Nauti
+                                            rauhallisista öistä, kauniista maisemista ja luonnon antimista vuoden
+                                            jokaisena
+                                            hetkenä!
+                                        </p>
+                                        <a href="<%= routes.campground.root %>" class="btn btn-primary">Tutustu
+                                            leirintäalueisiimme &rightarrow;</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <div class="cluster-map" id="map" class="mb-3"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6">
+                        <h2>Suosituimmat leirintäalueet</h2>
+                        <% if (campgrounds.length> 0) { %>
+                            <div class="row border rounded p-4">
+                                <% for (let campground of mostPopularCampgrounds){ %>
+                                    <div class="col-12 col-sm-6 col-md-4 mb-4">
+                                        <div class="card shadow campground-card h-100">
+                                            <% if (campground.images.length> 0) { %>
+                                                <img src="<%= campground.images[0].width(300) %>" class="card-img-top"
+                                                    alt="<%= campground.name %>" loading="lazy">
+                                                <% } else {%>
+                                                    <a title="Flanoz, CC0, via Wikimedia Commons"
+                                                        href="https://commons.wikimedia.org/wiki/File:Placeholder_view_vector.svg"><img
+                                                            alt="placeholder"
+                                                            src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/512px-Placeholder_view_vector.svg.png?20220519031949"
+                                                            class="card-img-top" loading="lazy"></a>
+                                                    <%}%>
+                                                        <div class="card-body">
+                                                            <a href="<%= routes.campground.root %>/<%= campground._id %>"
+                                                                class="stretched-link">
+                                                                <h5 class="card-title">
+                                                                    <%= campground.name %>
+                                                                </h5>
+                                                            </a>
+                                                            <p class="text-muted mb-0">
+                                                                <%= campground.location.name %>
+                                                            </p>
+                                                            <p class="card-text fw-bold">
+                                                                <%= campground.price %> €/Yö
+                                                            </p>
+                                                        </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                        <a href="<%= routes.campground.root %>" class="btn btn-primary btn-lg">Tutustu
+                                            leirintäalueisiimme &rightarrow;</a>
+                            </div>
+                            <% } else { %>
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <p class="card-text">Ei
+                                            leirintäalueita. Oletko ensimmäinen, joka luo sellaisen?
+                                        </p>
+                                        <a href="<%= `${routes.campground.root}/${routes.campground.new}` %>"
+                                            class="btn btn-primary">Luo leirintäalue &rightarrow;</a>
+                                    </div>
+                                    <% } %>
+                                </div>
+                    </div>
+            </main>
+            <script>
+                const campgrounds =<%- JSON.stringify(campgrounds) %>;
+            </script>
+            <script src="/scripts/maps/map.js"></script>
+
+            <%- include('./partials/footer')%>
+
+
+                <script src="/scripts/validateForm.js"></script>
+
+</body>
+
+</html>

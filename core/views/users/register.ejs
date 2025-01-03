@@ -1,0 +1,93 @@
+<% TITLE=`Rekisteröidy | ${WEBSITE_NAME}`%>
+    <%=layout( 'layouts/boilerplate' ) %>
+        <div class="container">
+            <div class="row justify-content-center mb-5">
+                <div class="col-12 col-md-6 col-xl-4">
+                    <div class="card shadow">
+                        <img src="https://res.cloudinary.com/da6ijff9w/image/upload/c_crop,w_1141,h_856/v1735815416/photo-1571863533956-01c88e79957e_ybqkqb.jpg"
+                            alt="" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title">Rekisteröidy</h5>
+                            <form action="<%= postRoute %>" method="post" novalidate
+                                class="validated-form realtime-form-validation mb-3">
+                                <div class="row">
+                                    <div class="col-12 col-md-6 mb-3">
+                                        <label for="firstname" class="form-label">Etunimi</label>
+                                        <input type="text" name="user[name][first]" id="firstname" placeholder="Etunimi"
+                                            class="form-control" required autocomplete="given-name"
+                                            minlength="<%= userRequirements.minNameLength %>"
+                                            maxlength="<%= userRequirements.maxNameLength %>" autofocus>
+                                        <div class="valid-feedback">
+                                            Hyvältä näyttää!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Etunimi puuttuu.
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 mb-3">
+                                        <label for="lastname" class="form-label">Sukunimi</label>
+                                        <input type="text" name="user[name][last]" id="lastname" placeholder="Sukunimi"
+                                            class="form-control" required autocomplete="family-name"
+                                            minlength="<%= userRequirements.minNameLength %>"
+                                            maxlength="<%= userRequirements.maxNameLength %>">
+                                        <div class="valid-feedback">
+                                            Hyvältä näyttää!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Sukunimi puuttuu.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12 col-md-6 mb-3">
+                                        <label for="username" class="form-label">Käyttäjänimi</label>
+                                        <input type="text" name="user[username]" id="username"
+                                            placeholder="Käyttäjänimi" class="form-control" required
+                                            minlength="<%= userRequirements.minUsernameLength %>"
+                                            maxlength="<%= userRequirements.maxUsernameLength %>">
+                                        <div class="valid-feedback">
+                                            Hyvältä näyttää!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Käyttäjänimi puuttuu.
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 mb-3">
+                                        <label for="password" class="form-label">Salasana</label>
+                                        <input type="password" name="user[password]" id="password"
+                                            placeholder="Salasana" class="form-control" required
+                                            minlength="<%= userRequirements.minPasswordLength %>"
+                                            maxlength="<%= userRequirements.maxPasswordLength %>">
+                                        <div class="valid-feedback">
+                                            Hyvältä näyttää!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Salasana puuttuu.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Sähköposti</label>
+                                    <input type="email" name="user[email]" id="email" placeholder="Sähköposti"
+                                        class="form-control" required autocomplete="email"
+                                        minlength="<%= userRequirements.minEmailLength %>"
+                                        maxlength="<%= userRequirements.maxEmailLength %>">
+                                    <div class="valid-feedback">
+                                        Hyvältä näyttää!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Sähköposti puuttuu.
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-between">
+                                    <a href="<%= routes.account.root %><%= routes.account.login %>"
+                                        class="btn btn-outline-primary">Kirjaudu
+                                        Sisään</a>
+                                    <button type="submit" class="btn btn-success">Luo Käyttäjä</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

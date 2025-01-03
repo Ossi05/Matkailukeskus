@@ -1,0 +1,26 @@
+.stars-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.star {
+    color: #f7c348;
+    text-shadow: 8px 8px 8px rgba(0, 0, 0, 0.12);
+}
+
+.stars-fieldset .star {
+    font-size: 2.5rem;
+}
+
+.stars-fieldset input[type="radio"] {
+    display: none;
+}
+
+.stars-fieldset .star {
+    cursor: pointer;
+    line-height: .9em;
+}
+
+.text-danger .star {
+    color: inherit;
+}

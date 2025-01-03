@@ -1,0 +1,231 @@
+<% TITLE=`${campground.name} | ${WEBSITE_NAME}`%>
+    <% layout('layouts/boilerplate')%>
+        <%- include('../partials/map')%>
+            <link rel="stylesheet" href="/styles/stars.css">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-3 order-2 order-lg-1">
+                    <h2>Tiedot</h2>
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">Aukioloajat</h5>
+                            <p class="card-text">
+                                12:00 - 18:00
+                            </p>
+                        </div>
+                    </div>
+                    <div class="card mb-3">
+                        <div id="map" class="map"></div>
+                        <div class="card-footer">
+                            <p class="card-text text-muted"><i class="bi bi-geo-alt-fill"></i>
+                                <span class="">
+                                    <%= campground.location.name %>
+                                </span>
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6 order-1">
+                    <div class="card mb-3 show-campground-card">
+                        <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+                            <% if (campground.images.length> 1) { %>
+                                <div class="carousel-indicators">
+                                    <% for( let i=0; i < campground.images.length; i++ ) { %>
+                                        <button type="button" data-bs-target="#carousel" data-bs-slide-to="<%= i %>"
+                                            class="<%= i === 0 ? " active" : "" %>" aria-current="true"
+                                            aria-label="Slide <%= i %>"></button>
+                                        <% } %>
+                                </div>
+                                <% } %>
+                                    <div class="carousel-inner">
+                                        <% for( let i=0; i < campground.images.length; i++ ) { %>
+                                            <div class="carousel-item <%= i === 0 ? " active" : "" %>">
+                                                <img src="<%= campground.images[i].width(1000) %>"
+                                                    class="d-block w-100 card-img-top"
+                                                    alt="<%= campground.name %> kuva <%= i + 1 %>">
+                                            </div>
+                                            <% } %>
+                                    </div>
+                                    <% if (campground.images.length> 1) { %>
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel"
+                                            data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Edellinen</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#carousel"
+                                            data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Seuraava</span>
+                                        </button>
+                                        <% } %>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <%= campground.name %>
+                            </h5>
+                            <p class="card-text">
+                                <%= campground.description %>
+                            </p>
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Sijainti:
+                                <span class="fw-bold">
+                                    <%= campground.location.name %>
+                                </span>
+                            </li>
+                            <li class="list-group-item">
+                                Hinta:
+                                <span class="fw-bold">
+                                    <%= campground.price %> €/yö
+                                </span>
+                            </li>
+                        </ul>
+                        <div class="card-body d-flex justify-content-between flex-column flex-lg-row">
+                            <a class="card-link btn btn-primary order-3 order-lg-1"
+                                href="<%= routes.campground.root %>">&larr;
+                                Kaikki
+                                leirintäalueet</a>
+                            <% if (user && campground.isAuthor(user._id)) { %>
+                                <div class="div mb-3 mb-lg-0 order-2">
+                                    <a href="<%= `${routes.campground.root}/${campground._id}${routes.campground.edit}` %>"
+                                        class="card-link btn btn-success">Muokkaa</a>
+                                    <form action="<%= `${routes.campground.root}/${campground._id}?_method=DELETE` %>"
+                                        method="POST" class="d-inline">
+                                        <button type="submit" class="btn btn-danger">Poista</button>
+                                    </form>
+                                </div>
+                                <% } %>
+                        </div>
+                        <div class="card-footer text-muted d-flex justify-content-between">
+                            <span id="host">Majoittaja: <%= campground.author.name.first %>
+                            </span>
+                            <span id="createdAt">
+                                Julkaistu: <time datetime="<%= campground.createdAt.toISOString() %>"
+                                    title="<%= campground.createdAt.toLocaleString() %>">
+                                    <%= campground.createdAt.toLocaleDateString() %>
+                                </time>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-12 col-lg-3 order-3">
+                    <% if (user) { %>
+                        <div class="mb-3">
+                            <h2>Jätä arvostelu</h2>
+                            <form action="<%=`${routes.campground.root}/${campground._id}${routes.review}` %>"
+                                method="POST" novalidate class="validated-form realtime-form-validation"
+                                id="review-form">
+                                <div class="mb-3">
+                                    <fieldset class="stars-fieldset">
+                                        <legend class="mb-1">Montako tähteä?</legend>
+                                        <div class="stars-wrapper" id="stars-form-wrapper">
+                                            <% for( let i=1; i < reviewRequirements.maxRating + 1; i++ ) { %>
+                                                <label for="<%= i %>" title="<%= i %> tähteä" class="star">
+                                                    &#9733;
+                                                </label>
+                                                <input type="radio" name="review[rating]" id="<%= i %>" value="<%= i %>"
+                                                    required>
+                                                <% } %>
+                                                    <div class="valid-feedback flex-grow-1">
+                                                        Hyvältä näyttää!
+                                                    </div>
+                                                    <div class="invalid-feedback flex-grow-1">
+                                                        Arvosana puuttuu.
+                                                    </div>
+                                        </div>
+                                    </fieldset>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="reviewTitle" class="form-label">Otsikko</label>
+                                    <input type="text" name="review[title]" id="reviewTitle" class="form-control"
+                                        placeholder="Otsikko" minlength="<%= reviewRequirements.minTitleLength %>"
+                                        maxlength="<%= reviewRequirements.maxTitleLength %>" required>
+                                    <div class="valid-feedback">
+                                        Hyvältä näyttää!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Otsikko puuttuu.
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="reviewText" class="form-label">Arvostelu</label>
+                                    <textarea name="review[reviewText]" id="reviewText" cols="10" rows="3"
+                                        class="form-control" placeholder="Arvostelu"
+                                        minlength="<%= reviewRequirements.minReviewTextLength %>"
+                                        maxlength="<%= reviewRequirements.maxReviewTextLength %>" required></textarea>
+                                    <div class="valid-feedback">
+                                        Hyvältä näyttää!
+                                    </div>
+                                    <div class="invalid-feedback">
+                                        Arvostelu puuttuu.
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-success">Lähetä arvostelu</button>
+                            </form>
+                        </div>
+                        <% } %>
+                            <div class="ratings">
+                                <h2>Arvostelut</h2>
+                                <% if (campground.reviews.length> 0) { for (let review of campground.reviews) {%>
+                                    <div class="card mb-3">
+                                        <div class="card-body">
+                                            <div class="d-flex justify-content-between flex-wrap">
+                                                <div class="stars-wrapper"
+                                                    aria-label="Arvosana: <%= review.rating %>/<%= reviewRequirements.maxRating %>">
+                                                    <% for( let i=0; i < reviewRequirements.maxRating; i++ ) { %>
+                                                        <h3 class="star">
+                                                            <%- i < review.rating ? '&#9733;' : '&#9734;' %>
+                                                        </h3>
+                                                        <% } %>
+                                                </div>
+                                                <h6 class="card-subtitle text-muted mb-2">
+                                                    <time datetime="<%= review.createdAt.toISOString() %>"
+                                                        title="<%= review.createdAt.toLocaleString() %>">
+                                                        <%= review.createdAt.toLocaleDateString() %>
+                                                    </time>
+                                                </h6>
+                                            </div>
+                                            <h5 class="card-title mb-1">
+                                                <%= review.title %>
+                                            </h5>
+                                            <p class="card-text">
+                                                <%= review.reviewText %>
+                                            </p>
+                                            <div class="mb-0 d-flex justify-content-between">
+                                                <p class="card-text text-muted">
+                                                    <%= `- ${review.author.username}` %>
+                                                </p>
+                                                <% if (user && review.isAuthor(user._id)) { %>
+                                                    <form class="mb-2"
+                                                        action="<%= `${routes.campground.root}/${campground._id}${routes.review}/${review._id}?_method=DELETE` %>"
+                                                        method="POST">
+                                                        <button type="submit"
+                                                            class="btn btn-sm btn-danger">Poista</button>
+                                                    </form>
+                                                    <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } } else { %>
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <p class="card-text">Ei
+                                                    arvosteluja. Oletko ensimmäinen, joka jakaa kokemuksesi?</p>
+                                                <% if (!user) { %>
+                                                    <a href="<%= `${routes.account.root}${routes.account.login}` %>"
+                                                        class="btn btn-primary">Kirjaudu
+                                                        sisään</a>
+                                                    <% } %>
+                                            </div>
+                                            <% } %>
+                                        </div>
+                            </div>
+                </div>
+                <% if (user) { %>
+                    <script src="/scripts/starFieldset.js"></script>
+                    <% } %>
+                        <script>
+                            const campgrounds = [<%- JSON.stringify(campground) %>];
+                        </script>
+                        <script src="/scripts/maps/map.js"></script>

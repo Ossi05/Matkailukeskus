@@ -1,0 +1,65 @@
+<% TITLE=`Leirintäalueet | ${WEBSITE_NAME}`%>
+    <% layout('layouts/boilerplate')%>
+        <div class="row mb-3 pt-3">
+            <div class="col d-flex flex-column  flex-md-row justify-content-between">
+                <h1 class="mb-3 mb-md-0">Leirintäalueet</h1>
+                <div class="">
+                    <%- include('../partials/campgroundPagination')%>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row mb-4">
+                <% if (campgrounds.length> 0) { %>
+                    <% for (let campground of campgrounds){ %>
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
+                            <div class="card shadow campground-card">
+                                <% if (campground.images.length> 0) { %>
+                                    <img src="<%= campground.images[0].width(300) %>" class="card-img-top"
+                                        alt="<%= campground.name %>" loading="lazy">
+                                    <% } else {%>
+                                        <a title="Flanoz, CC0, via Wikimedia Commons"
+                                            href="https://commons.wikimedia.org/wiki/File:Placeholder_view_vector.svg"><img
+                                                alt="placeholder"
+                                                src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/512px-Placeholder_view_vector.svg.png?20220519031949"
+                                                class="card-img-top" loading="lazy"></a>
+                                        <%}%>
+                                            <div class="card-body">
+                                                <a href="<%= routes.campground.root %>/<%= campground._id %>"
+                                                    class="stretched-link">
+                                                    <h5 class="card-title">
+                                                        <%= campground.name %>
+                                                    </h5>
+                                                </a>
+                                                <p class="text-muted mb-0">
+                                                    <%= campground.location.name %>
+                                                </p>
+                                                <p class="card-text fw-bold">
+                                                    <%= campground.price %> €/Yö
+                                                </p>
+                                            </div>
+                            </div>
+                        </div>
+                        <% } %>
+                            <% } else { %>
+                                <div class="row justify-content-center mt-3">
+                                    <div class="col-4">
+                                        <div class="card mb-3">
+                                            <div class="card-body">
+                                                <p class="card-text"><span class="fw-bold">Ei
+                                                        leirintäalueita.</span> Oletko ensimmäinen, joka luo sellaisen?
+                                                </p>
+                                                <div class="d-flex justify-content-center">
+                                                    <a href="<%= `${routes.campground.root}/${routes.campground.new}` %>"
+                                                        class="btn btn-primary">Luo leirintäalue &rightarrow;</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                </div>
+            </div>
+
+            <%- include('../partials/campgroundPagination')%>
+
+        </div>

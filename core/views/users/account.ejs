@@ -1,0 +1,47 @@
+<% TITLE=`Käyttäjätili | ${WEBSITE_NAME}`%>
+    <%=layout( 'layouts/boilerplate' ) %>
+        <div class="row justify-content-center mb-5">
+            <div class="col">
+                <div class="text-center">
+                    <h1>Tervetuloa, <%= user.fullName %>!
+                    </h1>
+                    <p>Tämä on käyttäjäprofiiliisi. Voit päivittää ja ylläpitää tietojasi täällä.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center mb-3">
+            <div class="col-6">
+                <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
+                    <div class="col">
+                        <div class="card">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Asetukset</h5>
+                                <p class="card-text">This is a longer card with supporting text below as a natural
+                                    lead-in to additional content. This content is a little bit longer.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Julkaisusi</h5>
+                                <p class="card-text">This is a longer card with supporting text below as a natural
+                                    lead-in to additional content. This content is a little bit longer.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card">
+                            <img src="..." class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title">Varaukset</h5>
+                                <p class="card-text">This is a longer card with supporting text below as a natural
+                                    lead-in to additional content. This content is a little bit longer.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

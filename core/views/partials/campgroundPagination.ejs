@@ -1,0 +1,25 @@
+<% if (page.maxPages> 0) { %>
+    <nav aria-label="campground navigation">
+        <ul class="pagination justify-content-center">
+            <li class="page-item <%= page.currentPage <= 1 ? " disabled" : "" %>">
+                <a class="page-link" aria-label="Edellinen"
+                    href="<%= `${routes.campground.root}?sivu=${Math.min(Math.max(page.currentPage - 1, 1), page.maxPages)}` %>">
+                    &laquo;
+                </a>
+            </li>
+            <% for( let i=1; i < page.maxPages + 1; i++ ) { %>
+                <li class="page-item <%= page.currentPage === i ? " active" : "" %>">
+                    <a class="page-link" href="<%=`${routes.campground.root}?sivu=${i}` %>">
+                        <%= i %>
+                    </a>
+                </li>
+                <% } %>
+                    <li class="page-item <%= page.currentPage >= page.maxPages ? " disabled" : "" %>">
+                        <a class="page-link" aria-label="Seuraava"
+                            href="<%= `${routes.campground.root}?sivu=${Math.min(Math.max(page.currentPage + 1, 1), page.maxPages)}` %>">
+                            &raquo;
+                        </a>
+                    </li>
+        </ul>
+    </nav>
+    <% } %>

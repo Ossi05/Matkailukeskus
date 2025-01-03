@@ -1,0 +1,133 @@
+<% TITLE=`${campground ? "Muokkaa leirintäaluetta" : "Uusi leirintäalue" } | ${WEBSITE_NAME}`%>
+    <% layout('layouts/boilerplate') %>
+        <% if (campground) { %>
+            <link rel="stylesheet" href="/styles/campgroundEditImage.css">
+            <% } %>
+                <div class="row justify-content-center mb-5">
+                    <div class="col-12 col-lg-8">
+                        <div class="card shadow">
+                            <div class="card-body">
+                                <h1 class="text-center">
+                                    <%= campground ? "Muokkaa leirintäaluetta" : "Uusi leirintäalue" %>
+                                </h1>
+                                <form
+                                    action="<%= campground ? `${routes.campground.root}/${campground._id}?_method=PUT` : routes.campground.root %>"
+                                    method="POST" novalidate class="validated-form realtime-form-validation"
+                                    enctype="multipart/form-data">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Nimi</label>
+                                        <input type="text" name="campground[name]" id="name" placeholder="Nimi"
+                                            class="form-control" value="<%= campground ? campground.name : "" %>"
+                                            required minlength="<%= campgroundRequirements.minNameLength %>"
+                                            maxlength="<%= campgroundRequirements.maxNameLength %>">
+                                        <div class="valid-feedback">
+                                            Hyvältä näyttää!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Nimi puuttuu.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="location" class="form-label">Sijainti</label>
+                                        <input type="text" name="campground[location][name]" id="location"
+                                            placeholder="Sijainti" class="form-control"
+                                            value="<%= campground ? campground.location.name : "" %>" required>
+                                        <div class="valid-feedback">
+                                            Hyvältä näyttää!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Sijainti puuttuu.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="price" class="form-label">Hinta €/Yö</label>
+                                        <div class="input-group mb-3">
+                                            <input type="number" min=0 class="form-control" placeholder="0" id="price"
+                                                name="campground[price]" aria-label="price"
+                                                value="<%= campground ? campground.price : " 0" %>"
+                                            aria-describedby="price-label"
+                                            min="<%= campgroundRequirements.minPrice %>"
+                                                max="<%= campgroundRequirements.maxPrice %>" required>
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text" id="price-label">€/Yö</span>
+                                                    </div>
+                                                    <div class="valid-feedback">
+                                                        Hyvältä näyttää!
+                                                    </div>
+                                                    <div class="invalid-feedback">
+                                                        Hinta puuttuu.
+                                                    </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="images" class="form-label" aria-label="Kuvat">Kuvat</label>
+                                        <input type="file" name="campground[images]" id="images" class="form-control"
+                                            multiple <%=campground ? "" : "required" %>>
+                                        <div class="valid-feedback">
+                                            Hyvältä näyttää!
+                                        </div>
+                                        <div class="invalid-feedback">
+                                            Kuvat puuttuu.
+                                        </div>
+                                    </div>
+                                    <% if (campground && campground.images.length> 0) { %>
+                                        <div class="mb-3 container">
+                                            <p class="text-muted mb-2">Valitse poistettavat kuvat tai muuta kuvien
+                                                järjestystä
+                                                raahaamalla</p>
+                                            <div class="row" id="campground-form-image-container">
+                                                <% campground.images.forEach((image, index)=> { %>
+                                                    <div class="col-6 col-md-6 col-lg-3 edit-image-parent"
+                                                        draggable="true" id="<%= index %>">
+                                                        <input type="checkbox" name="deleteImages[]"
+                                                            id="<%= image._id %>" value="<%= image.filepath %>">
+                                                        <label for="<%= image._id %>" class="trashcan-parent"><img
+                                                                src="<%= image.paramas('c_fill,h_150,w_250') %>"
+                                                                alt="<%= image.alt %>" class="img-thumbnail">
+                                                            <div class="trashcan">
+                                                                <svg fill="currentColor" class="bi bi-trash">
+                                                                    <use xlink:href="#trash-fill"></use>
+                                                                </svg>
+                                                            </div>
+                                                        </label>
+                                                        <!-- show svg image -->
+                                                        <input type="hidden" name="imageOrder[]" class="image-order"
+                                                            value='<%= image._id %>'>
+
+                                                    </div>
+                                                    <%});%>
+
+                                            </div>
+                                        </div>
+                                        <% } %>
+                                            <div class="mb-3">
+                                                <label for="description">Kuvaus (<%=
+                                                        campgroundRequirements.minDescriptionLength %>-
+                                                        <%= campgroundRequirements.maxDescriptionLength %>
+                                                            merkkiä)</label>
+                                                <textarea class="form-control" id="description"
+                                                    name="campground[description]" rows="3" placeholder="Kuvaus"
+                                                    required
+                                                    minlength="<%= campgroundRequirements.minDescriptionLength %>"
+                                                    maxlength="<%= campgroundRequirements.maxDescriptionLength %>"><%= campground ? campground.description : "" %></textarea>
+                                                <div class="valid-feedback">
+                                                    Hyvältä näyttää!
+                                                </div>
+                                                <div class="invalid-feedback">
+                                                    Kuvaus puuttuu.
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <button type="submit" class="btn btn-secondary">
+                                                    <%= campground ? "Muokkaa leiriä" : "Lisää leiri" %>
+                                                </button>
+                                            </div>
+                                </form>
+                                <a class="btn btn-primary"
+                                    href="<%= campground ? `${routes.campground.root}/${campground._id}` : routes.campground.root %>">&larr;
+                                    Takaisin</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <script src="/scripts/campgroundEditImage.js"></script>
