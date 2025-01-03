@@ -66,7 +66,7 @@ app.use(session({
     }
 }));
 app.use(flash());
-
+app.set("trust proxy", 1); // trust first proxy 
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
