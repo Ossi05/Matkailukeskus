@@ -181,8 +181,8 @@
                                                 </div>
                                                 <h6 class="card-subtitle text-muted mb-2">
                                                     <time datetime="<%= review.createdAt.toISOString() %>"
-                                                        title="<%= review.createdAt.toLocaleString() %>">
-                                                        <%= review.createdAt.toLocaleDateString() %>
+                                                        title="<%= review.createdAt.toLocaleDateString('fi-FI', { day: 'numeric', month: 'numeric', year: 'numeric', timeZone: 'Europe/Helsinki' }) %>">
+                                                        <%= review.createdAt.toLocaleDateString('fi-FI', { day: 'numeric', month: 'numeric', year: 'numeric', timeZone: 'Europe/Helsinki' }) %>
                                                     </time>
                                                 </h6>
                                             </div>
