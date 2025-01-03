@@ -96,7 +96,7 @@ const show = async (req, res) => {
             populate: {
                 path: "author"
             }
-        }).populate("author", "username");
+        }).populate("author");
     if (!campground) {
         req.flash("messages", { "danger": "Etsimääsi leiriä ei löytynyt!" });
         return res.redirect(campgroundRoute.root);

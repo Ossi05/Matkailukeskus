@@ -225,7 +225,8 @@
                 <% if (user) { %>
                     <script src="/scripts/starFieldset.js"></script>
                     <% } %>
-                        <script>
-                            const campgrounds = [<%- JSON.stringify(campground) %>];
-                        </script>
-                        <script src="/scripts/maps/map.js"></script>
+                        <% campground.author = undefined; // Remove the author so clients can't see it %>
+                            <script>
+                                const campgrounds = [<%- JSON.stringify(campground) %>];
+                            </script>
+                            <script src="/scripts/maps/map.js"></script>
