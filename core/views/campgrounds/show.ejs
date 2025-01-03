@@ -101,9 +101,8 @@
                             </span>
                             <span id="createdAt">
                                 Julkaistu: <time datetime="<%= campground.createdAt.toISOString() %>"
-                                    title="<%= campground.createdAt.toLocaleDateString('fi-FI', { timeZone: 'Europe/Helsinki' }) %>">
-                                    <%= campground.createdAt.toLocaleDateString('fi-FI', { timeZone: 'Europe/Helsinki'
-                                        }) %>
+                                    title="<%= campground.createdAt.toLocaleDateString('fi-FI', { day: 'numeric', month: 'numeric', year: 'numeric', timeZone: 'Europe/Helsinki' }) %>">
+                                    <%= campground.createdAt.toLocaleDateString('fi-FI', { day: 'numeric', month: 'numeric', year: 'numeric', timeZone: 'Europe/Helsinki' }) %>
                                 </time>
                             </span>
                         </div>
