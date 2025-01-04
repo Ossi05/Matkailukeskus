@@ -1,6 +1,6 @@
 <% TITLE=`Käyttäjätili | ${WEBSITE_NAME}`%>
-    <%=layout( 'layouts/boilerplate' ) %>
-        <div class="row justify-content-center mb-5">
+    <div class="row justify-content-center mb-4">
+        <%=layout( 'layouts/boilerplate' ) %>
             <div class="col">
                 <div class="text-center">
                     <h1>Tervetuloa, <%= user.fullName %>!
@@ -8,40 +8,122 @@
                     <p>Tämä on käyttäjäprofiiliisi. Voit päivittää ja ylläpitää tietojasi täällä.</p>
                 </div>
             </div>
-        </div>
-        <div class="row justify-content-center mb-3">
-            <div class="col-6">
-                <div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
-                    <div class="col">
-                        <div class="card">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Asetukset</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit longer.</p>
+    </div>
+    <div class="row justify-content-center mb-5">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="row justify-content-center">
+                <div class="col">
+                    <div class="card shadow h-100">
+                        <i class="fas fa-user-circle fa-10x text-center"></i>
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-end">
+                                <i class="bi bi-bookmarks-fill"></i>
                             </div>
+                            <h5 class="card-title">Varauksesi</h5>
+                            <!-- <p class="card-text">Hallitse varattuja leirintäalueesi!</p> -->
+                            <p class="card-text">Tulossa myöhemmin!</p>
+                            <a href="#" class="stretched-link mt-auto"></a>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Julkaisusi</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit longer.</p>
+                </div>
+                <div class="col">
+                    <div class="card shadow h-100">
+                        <div class="card-body d-flex flex-column">
+                            <div class="d-flex justify-content-end">
+                                <i class="bi bi-pencil-square"></i>
                             </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <img src="..." class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Varaukset</h5>
-                                <p class="card-text">This is a longer card with supporting text below as a natural
-                                    lead-in to additional content. This content is a little bit longer.</p>
-                            </div>
+                            <h5 class="card-title">Julkaisusi</h5>
+                            <!-- <p class="card-text">Hallitse julkaistuja leirintäalueita ja arvosteluita!</p> -->
+                            <p class="card-text">Tulossa myöhemmin!</p>
+                            <a href="#" class="stretched-link mt-auto"></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row justify-content-center mb-3">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h2 class="card-text text-center mb-3">Muokkaa käyttäjätietojasi</h2>
+                    <form action="#" method="" novalidate class="validated-form realtime-form-validation mb-3">
+                        <div class="row">
+                            <div class="col-12 col-md-6 mb-3">
+                                <label for="firstname" class="form-label">Etunimi</label>
+                                <input type="text" name="user[name][first]" id="firstname" placeholder="Etunimi"
+                                    class="form-control" required value="<%= user.name.first %>"
+                                    minlength="<%= userRequirements.minNameLength %>"
+                                    maxlength="<%= userRequirements.maxNameLength %>" autofocus>
+                                <div class="valid-feedback">
+                                    Hyvältä näyttää!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Etunimi puuttuu.
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 mb-3">
+                                <label for="lastname" class="form-label">Sukunimi</label>
+                                <input type="text" name="user[name][last]" id="lastname" placeholder="Sukunimi"
+                                    class="form-control" required value="<%= user.name.last %>"
+                                    minlength="<%= userRequirements.minNameLength %>"
+                                    maxlength="<%= userRequirements.maxNameLength %>">
+                                <div class="valid-feedback">
+                                    Hyvältä näyttää!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Sukunimi puuttuu.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-6 mb-3">
+                                <label for="username" class="form-label">Käyttäjänimi</label>
+                                <input type="text" name="user[username]" id="username" placeholder="Käyttäjänimi"
+                                    class="form-control" required value="<%= user.username %>"
+                                    minlength="<%= userRequirements.minUsernameLength %>"
+                                    maxlength="<%= userRequirements.maxUsernameLength %>">
+                                <div class="valid-feedback">
+                                    Hyvältä näyttää!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Käyttäjänimi puuttuu.
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 mb-3">
+                                <label for="password" class="form-label">Uusi Salasana</label>
+                                <input type="password" name="user[password]" id="password" placeholder="Salasana"
+                                    class="form-control" required minlength="<%= userRequirements.minPasswordLength %>"
+                                    maxlength="<%= userRequirements.maxPasswordLength %>">
+                                <div class="valid-feedback">
+                                    Hyvältä näyttää!
+                                </div>
+                                <div class="invalid-feedback">
+                                    Salasana puuttuu.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="form-label">Sähköposti</label>
+                            <input type="email" name="user[email]" id="email" placeholder="Sähköposti"
+                                value="<%= user.email %>" class="form-control" required autocomplete="email"
+                                minlength="<%= userRequirements.minEmailLength %>"
+                                maxlength="<%= userRequirements.maxEmailLength %>">
+                            <div class="valid-feedback">
+                                Hyvältä näyttää!
+                            </div>
+                            <div class="invalid-feedback">
+                                Sähköposti puuttuu.
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <form action="#" method="">
+                                <button type="submit" class="btn btn-danger">Poista Käyttäjä</button>
+                            </form>
+                            <button type="submit" class="btn btn-success">Muokkaa Käyttäjää</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

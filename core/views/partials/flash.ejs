@@ -1,5 +1,6 @@
 <% if (messages && messages.length> 0) {
-    for (const message of messages) { for (const [messageType, messageText] of Object.entries(message)){
+    console.log(messages, "GGGGGGGG");
+    for (let message of messages) { for (let [messageType, messageText] of Object.entries(message)){
     let icon = "";
     switch (messageType) {
     case "success":

@@ -3,7 +3,8 @@ import { userRequirements, routes } from "../configs.js";
 import { redirectToReturnTo } from "../utils/utils.js";
 
 const renderIndex = (req, res) => {
-    res.render("users/account", { userRequirements });
+    req.flash("messages", { "info": "HUOMIO! Käyttäjätilisivua rakennetaan yhä ja et pysty vielä muokkaamaan tietojasi!" });
+    res.render("users/account", { userRequirements, postRoute: req.originalUrl });
 }
 
 const renderRegister = (req, res) => {
