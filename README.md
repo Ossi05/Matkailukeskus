@@ -2,7 +2,7 @@
 
 Projekti on vielä keskeneräinen!
 
-Vieraile matkailukeskuksessa https://matkailukeskus.projektit.datahavu.fi/
+Vieraile matkailukeskuksessa https://matkailukeskus.datahavu.fi/
 
 ## Ominaisuudet
 Käyttäjät voivat luoda, muokata ja poistaa leirintäalueita.
