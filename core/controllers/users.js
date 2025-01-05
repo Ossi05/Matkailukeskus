@@ -3,7 +3,6 @@ import { userRequirements, routes } from "../configs.js";
 import { redirectToReturnTo } from "../utils/utils.js";
 
 const renderIndex = (req, res) => {
-    req.flash("messages", { "info": "HUOMIO! Käyttäjätilisivua rakennetaan yhä ja et pysty vielä muokkaamaan tietojasi!" });
     res.render("users/account", { userRequirements, postRoute: req.originalUrl });
 }
 
@@ -36,7 +35,6 @@ const renderLogin = async (req, res) => {
 
 const login = async (req, res) => {
     req.flash("messages", { "success": `Tervetuloa takaisin ${req.user.name.first}!` });
-    console.log("RETURNING TO:", res.locals.returnTo);
     redirectToReturnTo(res);
 }
 
