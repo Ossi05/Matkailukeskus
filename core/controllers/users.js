@@ -47,13 +47,13 @@ const login = async (req, res) => {
 const logout = (req, res, next) => {
     if (!req.isAuthenticated()) {
         req.flash("messages", { "info": "Et ole kirjautunut sisään!" });
-        return res.redirect(routes.home);
+        return res.redirect(routes.root);
     }
 
     req.logOut((error) => {
         if (error) { return next(err); }
         req.flash("messages", { "success": "Heippa!" });
-        res.redirect(req.get("referrer") || routes.home);
+        res.redirect(req.get("referrer") || routes.root);
     });
 }
 
