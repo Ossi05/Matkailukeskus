@@ -30,7 +30,7 @@ export const userRequirements = {
 };
 
 export const routes = {
-    home: "/",
+    root: "/",
     campground: {
         root: "/leirit",
         new: "/uusi",

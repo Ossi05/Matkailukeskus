@@ -43,5 +43,5 @@ userSchema.plugin(passportLocalMongoose, {
 userSchema.virtual("fullName").get(function () {
     return `${this.name.first} ${this.name.last}`;
 });
-
-export default mongoose.model("User", userSchema);
+const User = mongoose.model("User", userSchema);
+export default User;

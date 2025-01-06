@@ -8,7 +8,7 @@ export default function flashAsync(fn) {
                 return res.redirect(routes.campground.root);
             }
             req.flash("messages", { "danger": e.message });
-            const redirectRoute = req.originalUrl || "/"; // fallback to home route if undefined
+            const redirectRoute = req.originalUrl || routes.root; // fallback to home route if undefined
             res.redirect(redirectRoute);
         });
     }

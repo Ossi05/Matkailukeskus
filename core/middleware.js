@@ -1,7 +1,9 @@
+import { MongooseError } from "mongoose";
 import { cloudinary } from "./cloudinary/index.js";
 import { routes } from "./configs.js";
 import Campground from "./models/campground.js";
 import Review from "./models/review.js";
+import User from "./models/user.js";
 import { campgroundJoiSchema, reviewJoiSchema, userJoiShema } from "./schemas.js";
 import ExpressError from "./utils/expressError.js";
 
@@ -18,7 +20,6 @@ export function requireLogin(message = "Sinun täytyy kirjautua sisään nähdä
 
 export function storeReturnTo(req, res, next) {
     const referer = req.get("referer");
-    console.log(referer);
     if (referer && !req.session.returnTo) {
         req.session.returnTo = referer;
     }
@@ -70,6 +71,17 @@ export function requireReviewOwnership(message = "Sinulla ei ole oikeutta tähä
     }
 }
 
+export function requireUserOwnership(message = "Sinulla ei ole oikeutta tähän käyttäjään!") {
+    return async (req, res, next) => {
+        const { id } = req.params;
+        const user = id ? await User.findById(id) : await User.findByUsername(req.body.user.username);
+        if (req.user._id.toString() !== user._id.toString()) {
+            req.flash("messages", { "danger": message });
+            return res.redirect(req.get("Referrer") || routes.root);
+        }
+        next();
+    }
+}
 export function validateReview(req, res, next) {
     const { error } = reviewJoiSchema.validate(req.body);
     if (error) {

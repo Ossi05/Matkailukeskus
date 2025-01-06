@@ -92,7 +92,7 @@ app.use(routes.campground.root, campgroundRouter);
 app.use(`${routes.campground.root}/:id${routes.review}`, reviewRouter);
 app.use(`${routes.account.root}`, userRouter);
 
-app.get("/", async (req, res) => {
+app.get(routes.root, async (req, res) => {
     const campgrounds = await Campground.find({});
     const maxPopularCampgrounds = 6;
 

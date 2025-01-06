@@ -1,5 +1,5 @@
 import BaseJoi from "joi";
-import { campgroundRequirements, reviewRequirements } from "./configs.js";
+import { campgroundRequirements, reviewRequirements, userRequirements } from "./configs.js";
 import sanitizeHtml from 'sanitize-html';
 
 const extensions = (joi) => ({
@@ -58,10 +58,17 @@ export const userJoiShema = Joi.object({
         email: Joi.string().required().email().messages({
             "string.email": "Sähköpostin pitää olla oikea sähköposti",
         }).escapeHTML(),
-        password: Joi.string().required(),
+        password: Joi.string().optional().min(userRequirements.minPasswordLength).max(userRequirements.maxPasswordLength).messages({
+            "string.min": `Salasanan tulee olla vähintään ${userRequirements.minPasswordLength} merkkiä pitkä`,
+            "string.max": `Salasanan tulee olla vähintään ${userRequirements.maxPasswordLength} merkkiä pitkä`,
+        }),
         name: Joi.object({
             first: Joi.string().required().escapeHTML(),
-            last: Joi.string().required().escapeHTML()
-        }).required()
-    })
+            last: Joi.string().required().escapeHTML(),
+        }).required(),
+    }),
+    newPassword: Joi.string().min(userRequirements.minPasswordLength).max(userRequirements.maxPasswordLength).messages({
+        "string.min": `Salasanan tulee olla vähintään ${userRequirements.minPasswordLength} merkkiä pitkä`,
+        "string.max": `Salasanan tulee olla vähintään ${userRequirements.maxPasswordLength} merkkiä pitkä`,
+    }).optional()
 });

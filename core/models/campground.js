@@ -60,6 +60,20 @@ const campgroundSchema = new Schema({
 }, opts);
 
 campgroundSchema.post("findOneAndDelete", async (campground) => {
+    await deleteCampgroundData();
+});
+
+campgroundSchema.pre("deleteMany", async function (next) {
+    const conditions = this._conditions;
+    const campgrounds = await this.model.find(conditions);
+    for (let campground of campgrounds) {
+        await deleteCampgroundData(campground);
+    }
+    next();
+});
+
+
+async function deleteCampgroundData(campground) {
     if (!campground) { return; }
     const reviews = campground.reviews;
     if (reviews.length > 0) {
@@ -70,8 +84,8 @@ campgroundSchema.post("findOneAndDelete", async (campground) => {
         });
     }
     const images = campground.images.map(img => img.filepath);
-    campground.deleteImages(images);
-});
+    await campground.deleteImages(images);
+}
 
 campgroundSchema.methods.isAuthor = function (userId) {
     return this.author.equals(userId);

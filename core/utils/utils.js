@@ -1,6 +1,6 @@
-import {routes} from "../configs.js";
+import { routes } from "../configs.js";
 
 export function redirectToReturnTo(res) {
-    const redirectUrl = res.locals.returnTo || routes.home;
+    const redirectUrl = res.locals.returnTo || routes.root;
     res.redirect(redirectUrl);
 }

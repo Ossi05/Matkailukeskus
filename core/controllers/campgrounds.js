@@ -88,7 +88,7 @@ const update = async (req, res) => {
     res.redirect(`${campgroundRoute.root}/${campground._id}`);
 }
 
-const show = async (req, res) => {
+const renderShow = async (req, res) => {
     const { id } = req.params;
     const campground = await Campground.findById(id)
         .populate({
@@ -118,6 +118,6 @@ export default {
     createCampground,
     renderEditForm,
     update,
-    renderShow: show,
+    renderShow,
     deleteCamground
 }

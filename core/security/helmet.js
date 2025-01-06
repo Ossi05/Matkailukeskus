@@ -41,6 +41,7 @@ export const contentSecurityPolicy = {
             "https://unpkg.com",
             "https://*.tile.openstreetmap.org",
             "https://mt1.google.com",
+            "https://upload.wikimedia.org",
         ],
         fontSrc: ["'self'", ...fontSrcUrls],
     },
