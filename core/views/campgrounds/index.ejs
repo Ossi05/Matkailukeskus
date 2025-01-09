@@ -9,6 +9,19 @@
             </div>
         </div>
         <div class="container">
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <form action="<%= routes.campground.root %>" method="get" class="mb-3" id="campgroundSortForm">
+                        <select class="form-select" aria-label="campground sorting" name="lajittele">
+                            <% for(let sortOption of sorting.options ) { %>
+                                <option <%=sortOption==sorting.selected ? "selected" : "" %> value="<%= sortOption %>">
+                                        <%= sortOption %>
+                                </option>
+                                <% } %>
+                        </select>
+                    </form>
+                </div>
+            </div>
             <div class="row mb-4">
                 <% if (campgrounds.length> 0) { %>
                     <% for (let campground of campgrounds){ %>
@@ -60,6 +73,7 @@
                                 </div>
             </div>
 
+            <script src="scripts/campgroundSort.js"></script>
             <%- include('../partials/campgroundPagination')%>
 
         </div>

@@ -4,16 +4,29 @@ import { routes } from "../configs.js";
 import getGeometry from "../utils/geometry.js";
 const campgroundRoute = routes.campground;
 
+const sortingOptions = {
+    Uusimmat: { createdAt: -1 },
+    Vanhimmat: { createdAt: 1 },
+    Halvimmat: { price: 1 },
+    Kalleimmat: { price: -1 },
+};
+
+
 const index = async (req, res) => {
     const maxPerPage = 12;
     let currentPage = parseInt(req.query.sivu) || 1;
     const maxPages = Math.ceil(await Campground.countDocuments() / maxPerPage);
-    const campgrounds = await Campground.find().skip((currentPage - 1) * maxPerPage).limit(maxPerPage);
+    const sortOption = req.query.lajittele ? sortingOptions[req.query.lajittele] : sortingOptions.Uusimmat;
+    const campgrounds = await Campground.find().skip((currentPage - 1) * maxPerPage).limit(maxPerPage).sort(sortOption);
     const page = {
         maxPages,
         currentPage,
     }
-    res.render("campgrounds/index", { campgrounds, page });
+    const sorting = {
+        selected: req.query.lajittele,
+        options: Object.keys(sortingOptions)
+    }
+    res.render("campgrounds/index", { campgrounds, page, sorting });
 }
 
 const renderNewForm = (req, res) => {

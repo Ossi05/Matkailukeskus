@@ -3,20 +3,21 @@
         <ul class="pagination justify-content-center">
             <li class="page-item <%= page.currentPage <= 1 ? " disabled" : "" %>">
                 <a class="page-link" aria-label="Edellinen"
-                    href="<%= `${routes.campground.root}?sivu=${Math.min(Math.max(page.currentPage - 1, 1), page.maxPages)}` %>">
+                    href="<%= `${routes.campground.root}?sivu=${Math.min(Math.max(page.currentPage - 1, 1), page.maxPages)}`%><%= sorting.selected ? `&lajittele=${sorting.selected}` : "" %>">
                     &laquo;
                 </a>
             </li>
             <% for( let i=1; i < page.maxPages + 1; i++ ) { %>
                 <li class="page-item <%= page.currentPage === i ? " active" : "" %>">
-                    <a class="page-link" href="<%=`${routes.campground.root}?sivu=${i}` %>">
+                    <a class="page-link"
+                        href="<%=`${routes.campground.root}?sivu=${i}` %><%= sorting.selected ? `&lajittele=${sorting.selected}` : "" %>">
                         <%= i %>
                     </a>
                 </li>
                 <% } %>
                     <li class="page-item <%= page.currentPage >= page.maxPages ? " disabled" : "" %>">
                         <a class="page-link" aria-label="Seuraava"
-                            href="<%= `${routes.campground.root}?sivu=${Math.min(Math.max(page.currentPage + 1, 1), page.maxPages)}` %>">
+                            href="<%= `${routes.campground.root}?sivu=${Math.min(Math.max(page.currentPage + 1, 1), page.maxPages)}` %><%= sorting.selected ? `&lajittele=${sorting.selected}` : "" %>">
                             &raquo;
                         </a>
                     </li>
