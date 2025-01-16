@@ -13,6 +13,8 @@ Vieraile matkailukeskuksessa https://matkailukeskus.datahavu.fi/
 - Käyttäjät voivat luoda, muokata ja poistaa leirintäalueita.
 - Käyttäjät voivat arvostella leirintäalueita
 - Leirintäalueiden lajittelu ja haku
+- Käyttäjien muokkaus ja poisto
+- Ja paljon muuta
 
 ## Ympäristömuuttujat
 
