@@ -59,9 +59,10 @@
                     </ul>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Search</button>
+            <form class="d-flex" role="search" method="get" action="<%= routes.campground.root %>">
+                <input class="form-control me-2" type="search" placeholder="Hae leirintäalueita" aria-label="Search"
+                    name="hakusana" id="hakusana">
+                <button class="btn btn-outline-success" type="submit">Hae</button>
             </form>
         </div>
     </div>

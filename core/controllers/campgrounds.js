@@ -2,6 +2,7 @@ import Campground from "../models/campground.js";
 import { campgroundRequirements, reviewRequirements } from "../configs.js";
 import { routes } from "../configs.js";
 import getGeometry from "../utils/geometry.js";
+import sanitizeHtml from 'sanitize-html';
 const campgroundRoute = routes.campground;
 
 const sortingOptions = {
@@ -15,9 +16,11 @@ const sortingOptions = {
 const index = async (req, res) => {
     const maxPerPage = 12;
     let currentPage = parseInt(req.query.sivu) || 1;
-    const maxPages = Math.ceil(await Campground.countDocuments() / maxPerPage);
     const sortOption = req.query.lajittele ? sortingOptions[req.query.lajittele] : sortingOptions.Uusimmat;
-    const campgrounds = await Campground.find().skip((currentPage - 1) * maxPerPage).limit(maxPerPage).sort(sortOption);
+    const keyword = sanitizeHtml(req.query.hakusana) || "";
+    const query = keyword ? { name: new RegExp(keyword, "i") } : {};
+    const campgrounds = await Campground.find(query).skip((currentPage - 1) * maxPerPage).limit(maxPerPage).sort(sortOption);
+    const maxPages = Math.ceil(campgrounds.length / maxPerPage);
     const page = {
         maxPages,
         currentPage,
@@ -26,7 +29,7 @@ const index = async (req, res) => {
         selected: req.query.lajittele,
         options: Object.keys(sortingOptions)
     }
-    res.render("campgrounds/index", { campgrounds, page, sorting });
+    res.render("campgrounds/index", { campgrounds, page, sorting, keyword });
 }
 
 const renderNewForm = (req, res) => {

@@ -18,6 +18,9 @@
                                         <%= sortOption %>
                                 </option>
                                 <% } %>
+                                    <% if (keyword) { %>
+                                        <input type="hidden" name="hakusana" value="<%= keyword %>">
+                                        <% } %>
                         </select>
                     </form>
                 </div>
