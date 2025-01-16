@@ -48,6 +48,7 @@ export function requireCampgroundOwnership(message = "Sinulla ei ole oikeutta t�
     return async (req, res, next) => {
         const { id } = req.params;
         const campground = await Campground.findById(id);
+        if (!campground) { return next(new ExpressError(404, "Leirintäaluetta ei löytynyt!")) };
         if (!campground.isAuthor(req.user._id)) {
             req.flash("messages", { "danger": message });
             return res.redirect(`${routes.campground}/${id}`);
@@ -61,6 +62,7 @@ export function requireReviewOwnership(message = "Sinulla ei ole oikeutta tähä
     return async (req, res, next) => {
         const { id, reviewId } = req.params;
         const review = await Review.findById(reviewId);
+        if (!review) { return next(new ExpressError(404, "Arvostelua ei löytynyt!")) };
         if (!review.isAuthor(req.user._id)) {
             // User is not the author of the review!
             req.flash("messages", { "danger": message });
@@ -75,6 +77,7 @@ export function requireUserOwnership(message = "Sinulla ei ole oikeutta tähän 
     return async (req, res, next) => {
         const { id } = req.params;
         const user = id ? await User.findById(id) : await User.findByUsername(req.body.user.username);
+        if (!user) { return next(new ExpressError(404, "Käyttäjää ei löytynyt!")) };
         if (req.user._id.toString() !== user._id.toString()) {
             req.flash("messages", { "danger": message });
             return res.redirect(req.get("Referrer") || routes.root);
