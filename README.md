@@ -3,7 +3,7 @@
 Projekti on vielä keskeneräinen!
 
 Matkailukeskus on full-stack verkkosivuprojekti, mikä on osa Colt Steelen [Udemy-kurssia](https://www.udemy.com/course/the-web-developer-bootcamp/?couponCode=24T1MT11625BROW)
-Projektissa on käytetty mm. Node.js:ää, Expressiä, MongoDB:tä ja Bootstrappia. Autentikoinnissa käytetään Passport.js-kirjastoa.
+Projektissa on käytetty mm. Node.js:ää, Expressiä, MongoDB:tä ja Bootstrappia. Autentikoinnissa käytetään Passport.js-kirjastoa. Leirintäalueet ja arvostelut ovat generoituja.
 
 ## Live-demo
 Vieraile matkailukeskuksessa https://matkailukeskus.datahavu.fi/
@@ -40,9 +40,19 @@ Vieraile matkailukeskuksessa https://matkailukeskus.datahavu.fi/
     ```
     npm install
     ```
+
 4. Luo `.env`-tiedosto ja lisää ympäristömuuttujat (katso "Ympäristömuuttujat" -osio).
 5. Käynnistä projekti:
     ```
     node --require dotenv/config index.js
     ```
 5. Mene selaimessasi osoitteeseen [localhost](http://localhost/)
+
+## Kuvia
+![image](https://github.com/user-attachments/assets/71c918b3-0e6e-4665-b4d5-d6f0af1751d0)
+
+![image](https://github.com/user-attachments/assets/1394f2c3-98ac-46d6-81b7-16576946acdf)
+
+![image](https://github.com/user-attachments/assets/c89bead7-e42d-4059-9373-78c25467fda2)
+
+
