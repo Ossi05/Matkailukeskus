@@ -19,8 +19,12 @@ const index = async (req, res) => {
     const sortOption = req.query.lajittele ? sortingOptions[req.query.lajittele] : sortingOptions.Uusimmat;
     const keyword = sanitizeHtml(req.query.hakusana) || "";
     const query = keyword ? { name: new RegExp(keyword, "i") } : {};
-    const campgrounds = await Campground.find(query).skip((currentPage - 1) * maxPerPage).limit(maxPerPage).sort(sortOption);
-    const maxPages = Math.ceil(campgrounds.length / maxPerPage);
+    const totalCampgrounds = await Campground.countDocuments(query);
+    const campgrounds = await Campground.find(query)
+        .skip((currentPage - 1) * maxPerPage)
+        .limit(maxPerPage)
+        .sort(sortOption);
+    const maxPages = Math.ceil(totalCampgrounds / maxPerPage);
     const page = {
         maxPages,
         currentPage,
