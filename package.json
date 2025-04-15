@@ -31,7 +31,7 @@
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^8.0.0",
     "remove": "^0.1.5",
-    "sanitize-html": "^2.14.0"
+    "sanitize-html": "^2.15.0"
   },
   "type": "module"
 }
